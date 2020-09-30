@@ -1,6 +1,5 @@
-import time 
-
 import pymysql
+
 conn=pymysql.connect(host="localhost",user="root",password="",db="project")
 a=conn.cursor()
 
@@ -8,13 +7,15 @@ a=conn.cursor()
 val=['SUPW','1','NTR','NTR','NTR','NTR','NTR']
 a.execute(sql,val) """
 
+"""data =a.fetchone()
+for i in data:
+    print(i) """
+
 teachers = []
 noOfSection = 5
 a.execute("select * from std_12")
 
-"""data =a.fetchone()
-for i in data:
-    print(i) """
+
     
 #         Sorting  Teacher's  Name 
 
@@ -33,7 +34,81 @@ for m in range(5):
             teachers.pop(p)
 for s in teachers :
     print(s)
-time.sleep(5)
 
+ 
 #          Teacher's ID Creation
+
+def checking(teacher):
+    try:
+
+    # Comparinprig with Other Tables
+
+        a.execute("select * from teacher")
+        data =a.fetchall()
+        lastId = data[len(data)-1][0]
+        oldTeacher=[]
+        removingTeacher = []
+        for i in teacher:
+            for j in range(len(data)):
+                if i == data[j][1]:
+                    removingTeacher.append(i)
+                    oldTeacher.append(data[j])
+        for i in removingTeacher:
+            teacher.remove(i)
+
+    #Creating new Id for New Teacher
+
+        newIdList = []
+        for i in range(1,(len(teacher)+1)):
+            Id = lastId + i
+            newIdList.append(Id)
+
+    #  Combining teacher name and Id And Add Old Teacher
+
+        teacher_info = []
+        for i in oldTeacher :
+            teacher_info.append(i) 
+        for i in range(len(teacher)):
+            temp = []
+            temp.append(newIdList[i])
+            temp.append(teacher[i])
+            teacher_info.append(temp)
+        print(teacher_info)
+
+    #   Creation Of Tables 
+
+        a.execute("create table 11teacher (ID int(10) , Name char(50))")
+        for i in teacher_info:
+            Command = "insert into 11teacher values(%s,%s)"
+            Value = i
+            a.execute(Command,Value)
+            
+   
+
+    except :
+        IdList = []
+        teacher_info = []
+    # Creating  Id For Teacher
+        for i in range(len(teacher)):
+            Id = 1000 + i
+            IdList.append(Id)
+    # Combining Name And Id
+        for i in range(len(teacher)):
+            temp = []
+            temp.append(IdList[i])
+            temp.append(teacher[i])
+            teacher_info.append(temp)
+        print(teacher_info)
+
+    #   Creation Of Tables
+
+        a.execute("create table 12teacher (ID int(10) , Name char(50))")
+        for i in teacher_info:
+            Command = "insert into 12teacher values(%s,%s)"
+            Value = i
+            a.execute(Command,Value)
+        
+checking(teachers)
+
+
 
