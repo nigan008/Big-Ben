@@ -1,30 +1,39 @@
+#  Importing PYMYSQL And Establishing Connecction With MYSQL
+
 import pymysql
 conn=pymysql.connect(host="localhost",user="root",password="",db="project")
 sql=conn.cursor()
-Find = True
 
+#  Importing Colorama Package
+ 
 from colorama import init
 init()
+
+# Importing Engine and Sheduler(Function)
+
+from Engine import Sheduler
 
 # Recieving Input From Admin
 
 standard = int(input("STANDARAD : "))
 
-# To Find The Existence Of Tables :
+# To Find The Existence Of Tables 
+
+Find = True
 sql.execute("show tables")
 data = sql.fetchall()
+
 for i in data:
     if i[0] == "class_" + str(standard):
-        print(f"The Time Table for class_{standard} was Already Ceated ")
+        print(f"The Time Table for class_{standard} was Already Created ")
         Find = False
-        descision = input("Do You Want to Reshedule It !! y/n")
-        if descision == "y" or "Y":
-            pass
-
-        elif descision == "n" or "N":
-            pass
+        descision = input("Do You Want to Reshedule It! ? y/n")
+        descision = descision.lower()
+        if descision == "yes" :
+            Sheduler(standard)
+        else :
+            print("Hi")
         
-
 if Find:
     print("")
     noOfSubject = int(input("No . Of . Subject :"))
@@ -198,8 +207,9 @@ if Find:
             Command = f"insert into teacher_" + str(standard) + " values(%s,%s)"
             Value = i
             sql.execute(Command,Value)
-            
-    
 
+# Allocation Of Periods 
+
+    Sheduler(standard)
 
 
