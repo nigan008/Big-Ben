@@ -130,5 +130,6 @@ def Sheduler(standard):
         
     print(wholeClassPeriod)
     print(Teacher)
+    
 
 
