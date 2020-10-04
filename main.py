@@ -13,6 +13,8 @@ init()
 
 from Engine import Sheduler
 
+import csv
+
 # Recieving Input From Admin
 
 standard = int(input("STANDARAD : "))
@@ -111,7 +113,7 @@ if Find:
     teachers = []
     sql.execute(f"select * from class_{standard}")
 
-    for m in range(5):
+    for m in range(noOfSubject):
         data = sql.fetchone()
         for b in range(2,noOfSection+2):
             teachers.append(data[b])
@@ -157,12 +159,22 @@ if Find:
             for i in removingTeacher:
                 teachers.remove(i)
 
-        #Creating new Id for New Teacher
+        #Creating new Id for New Teacher and File
 
         newIdList = []
         for i in range(1,(len(teachers)+1)):
             Id = lastId + i
             newIdList.append(Id)
+            with open(f"{str(Id)}_{teachers[i]}.csv","w") as teacherFile:
+                teacherFileWriter = csv.writer(teacherFile)
+                Value = [["Days","Period-1","Period-2","Period-3","Period-4","Period-5","Period-6","Period-7","Period-8",],
+                    ["MON","-","-","-","-","-","-","-","-"],
+                    ["TUE","ASS","-","-","-","-","-","-","-"],
+                    ["WED","-","-","-","-","-","-","-","-"],
+                    ["THUR","ASS","-","-","-","-","-","-","-"],
+                    ["FRI","-","-","-","-","-","-","-","-"]]
+                for i in Value:
+                    teacherFileWriter.writerow(i)
 
         #Combining teacher name and Id And Add Old Teacher
 
@@ -188,10 +200,22 @@ if Find:
 
         IdList = []
         teacher_info = []
-    # Creating  Id For Teacher
+    # Creating  Id For Teacher And File
         for i in range(len(teachers)):
             Id = 1000 + i
             IdList.append(Id)
+            with open(f"{str(Id)}_{teachers[i]}.csv","w") as teacherFile:
+                teacherFileWriter = csv.writer(teacherFile)
+                Value = [["Days","Period-1","Period-2","Period-3","Period-4","Period-5","Period-6","Period-7","Period-8",],
+                    ["MON","-","-","-","-","-","-","-","-"],
+                    ["TUE","ASS","-","-","-","-","-","-","-"],
+                    ["WED","-","-","-","-","-","-","-","-"],
+                    ["THUR","ASS","-","-","-","-","-","-","-"],
+                    ["FRI","-","-","-","-","-","-","-","-"]]
+                for i in Value:
+                    teacherFileWriter.writerow(i)
+                
+            
     # Combining Name And Id
         for i in range(len(teachers)):
             temp = []

@@ -8,6 +8,8 @@ import pymysql
 conn=pymysql.connect(host="localhost",user="root",password="",db="project")
 sql=conn.cursor()
 
+import csv
+
 # A Function To Shedule The Periods For Teachers And Students
 
 def Sheduler(standard):
@@ -23,11 +25,12 @@ def Sheduler(standard):
 
     wholeClassPeriod = []
     for i in range(noOfSection) :
-        classPeriod = [[0,0,0,0,0,0,0,0],
-                    ["Ass",0,0,0,0,0,0,0],  
-                    [0,0,0,0,0,0,0,0],
-                    ["Ass",0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0]]     
+        classPeriod = [["Days","Period-1","Period-2","Period-3","Period-4","Period-5","Period-6","Period-7","Period-8",],
+                        ["MON","-","-","-","-","-","-","-","-"],
+                        ["TUE","ASS","-","-","-","-","-","-","-"],
+                        ["WED","-","-","-","-","-","-","-","-"],
+                        ["THUR","ASS","-","-","-","-","-","-","-"],
+                        ["FRI","-","-","-","-","-","-","-","-"]]   
         wholeClassPeriod.append(classPeriod)
 
     # Recieving TeacherInfo from Database
@@ -37,19 +40,21 @@ def Sheduler(standard):
 
     Section =[]
 
-    Teacher = []
-
     # Obtaining Teacher's Name 
 
     for Name in range(len(TeacherInfo)) :
         
         # Recieving File Of Teacher As Per The ID
-
-        teacher = [[0,0,0,0,0,0,0,0],
-                ["Ass",0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0],
-                ["Ass",0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0]]
+    
+        teacher = []
+        line = 0
+        with open(f"{str(TeacherInfo[Name][0])}_{TeacherInfo[Name][1]}.csv","r") as teacherFile:
+            teacherFileReader = csv.reader(teacherFile)
+            for g in teacherFileReader:
+                if line%2 == 0:
+                    teacher.append(g)
+                line+=1
+            teacherFile.close()           
         
         # Obtaining Section , No_Of_Periods , Subject of the Respective Teacher
 
@@ -70,7 +75,7 @@ def Sheduler(standard):
 
                 if ClassInfo[sub][1] > 5 :
                     for p in range(2):
-                        Day = [0,1,2,3,4]
+                        Day = [1,2,3,4,5]
                         len(str(p))
 
                         # Obtaining Random Day
@@ -78,7 +83,7 @@ def Sheduler(standard):
                         for l in range(len(Day)):
                             day = random.choice(Day)
                             Day.remove(day)
-                            Period = [0,1,2,3,4,5,6,7]
+                            Period = [1,2,3,4,5,6,7,8]
                             len(str(l))
 
                             # Obtaining Random Period
@@ -90,8 +95,8 @@ def Sheduler(standard):
 
                                 # Condition For Checking Both Students And Teacher Are Free At That Period
 
-                                if wholeClassPeriod[section][day][period] == 0 and teacher[day][period] == 0 :
-                                    wholeClassPeriod[section][day][period] = ClassInfo[sub][0]
+                                if wholeClassPeriod[section][day][period] == "-" and teacher[day][period] == "-" :
+                                    wholeClassPeriod[section][day][period] = ClassInfo[sub][0][0:3].upper()
                                     teacher[day][period] = str(standard) + chr(section + 65)
                                     count += 1 
                                     break
@@ -101,14 +106,14 @@ def Sheduler(standard):
                 # Program For The Subject Less Than 5 Periods
 
                 else:
-                    Day = [0,1,2,3,4]
+                    Day = [1,2,3,4,5]
 
                     # Obtaining Random Day
 
                     for l in range(len(Day)):
                         day = random.choice(Day)
                         Day.remove(day)
-                        Period = [0,1,2,3,4,5,6,7]
+                        Period = [1,2,3,4,5,6,7,8]
 
                         # Obtaining Random Period
 
@@ -126,10 +131,16 @@ def Sheduler(standard):
                         if count == ClassInfo[sub][1] :
                             break
 
-        Teacher.append(teacher)
+        with open(f"{str(TeacherInfo[Name][0])}_{TeacherInfo[Name][1]}.csv","w") as teacherFile:
+            teacherFileWriter = csv.writer(teacherFile)
+            for I in teacher:
+                    teacherFileWriter.writerow(I)
         
-    print(wholeClassPeriod)
-    print(Teacher)
+    for Section in wholeClassPeriod:
+        with open(f"{standard}_{chr(wholeClassPeriod.index(Section) + 65)}.csv","w") as studentFile:
+            studentFileWriter = csv.writer(studentFile)
+            for ClassPeriod in Section:
+                studentFileWriter.writerow(ClassPeriod)
     
 
 
