@@ -1,7 +1,7 @@
 #  Importing PYMYSQL And Establishing Connecction With MYSQL
 
 import pymysql
-conn=pymysql.connect(host="localhost",user="root",password="",db="project")
+conn=pymysql.connect(host="localhost",user="root",password="")
 sql=conn.cursor()
 
 #  Importing Colorama Package
@@ -14,13 +14,37 @@ init()
 from Engine import Sheduler
 
 import csv
+# Importing OS Module Creating Folder For Storing Files File
+import os
+if os.path.exists("Teachers"):
+    pass
+else:
+    os.mkdir("Teachers")
+if os.path.exists("Class"):
+    pass
+else:
+    os.mkdir("Teachers")
 
+
+# Creation Of DataBase 
+
+sql.execute("show databases;")
+data= sql.fetchall()
+for i in data:
+    if i[0] == "big_ben":
+        sql.execute("use big_ben;")
+        break
+    else :
+        sql.execute("create database big_ben;")
+        sql.execute("use big_ben;")
+        break
 # Recieving Input From Admin
 
 standard = int(input("STANDARAD : "))
 
 # To Find The Existence Of Tables 
 
+Reshedule = False
 Find = True
 sql.execute("show tables")
 data = sql.fetchall()
@@ -32,7 +56,8 @@ for i in data:
         descision = input("Do You Want to Reshedule It! ? y/n")
         descision = descision.lower()
         if descision == "yes" :
-            Sheduler(standard)
+            Reshedule = True
+            Sheduler(standard,conn,Reshedule) 
         else :
             print("Hi")
         
@@ -204,7 +229,7 @@ if Find:
         for i in range(len(teachers)):
             Id = 1000 + i
             IdList.append(Id)
-            with open(f"{str(Id)}_{teachers[i]}.csv","w") as teacherFile:
+            with open(f"Teachers//{str(Id)}_{teachers[i]}.csv","w") as teacherFile:
                 teacherFileWriter = csv.writer(teacherFile)
                 Value = [["Days","Period-1","Period-2","Period-3","Period-4","Period-5","Period-6","Period-7","Period-8",],
                     ["MON","-","-","-","-","-","-","-","-"],
@@ -234,6 +259,6 @@ if Find:
 
 # Allocation Of Periods 
 
-    Sheduler(standard)
+    Sheduler(standard,conn,Reshedule)
 
 

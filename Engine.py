@@ -2,17 +2,17 @@
 
 import random
 
-# Importing PYMYSQL And Establishing Connecction With MYSQL
-
-import pymysql
-conn=pymysql.connect(host="localhost",user="root",password="",db="project")
-sql=conn.cursor()
+# Importing CSV Package
 
 import csv
 
 # A Function To Shedule The Periods For Teachers And Students
 
-def Sheduler(standard):
+def Sheduler(standard,conn,Reshedule):
+    # Importing PYMYSQL And Establishing Connecction With MYSQL
+
+    import pymysql
+    sql=conn.cursor()
 
     #  Recieving ClassInfo from Database
 
@@ -48,13 +48,21 @@ def Sheduler(standard):
     
         teacher = []
         line = 0
-        with open(f"{str(TeacherInfo[Name][0])}_{TeacherInfo[Name][1]}.csv","r") as teacherFile:
+        with open(f"Teachers//{str(TeacherInfo[Name][0])}_{TeacherInfo[Name][1]}.csv","r") as teacherFile:
             teacherFileReader = csv.reader(teacherFile)
             for g in teacherFileReader:
                 if line%2 == 0:
                     teacher.append(g)
                 line+=1
-            teacherFile.close()           
+            teacherFile.close() 
+
+        if Reshedule :
+            for i in teacher:
+                for j in i:
+                    P = j[0:-1]
+                    if  P == str(standard):
+                        teacher[teacher.index(i)][teacher[teacher.index(i)].index(j)] = "-"
+
         
         # Obtaining Section , No_Of_Periods , Subject of the Respective Teacher
 
@@ -131,13 +139,13 @@ def Sheduler(standard):
                         if count == ClassInfo[sub][1] :
                             break
 
-        with open(f"{str(TeacherInfo[Name][0])}_{TeacherInfo[Name][1]}.csv","w") as teacherFile:
+        with open(f"Teachers//{str(TeacherInfo[Name][0])}_{TeacherInfo[Name][1]}.csv","w") as teacherFile:
             teacherFileWriter = csv.writer(teacherFile)
             for I in teacher:
                     teacherFileWriter.writerow(I)
         
     for Section in wholeClassPeriod:
-        with open(f"{standard}_{chr(wholeClassPeriod.index(Section) + 65)}.csv","w") as studentFile:
+        with open(f"Class//{standard}_{chr(wholeClassPeriod.index(Section) + 65)}.csv","w") as studentFile:
             studentFileWriter = csv.writer(studentFile)
             for ClassPeriod in Section:
                 studentFileWriter.writerow(ClassPeriod)
