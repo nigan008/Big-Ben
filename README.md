@@ -2,7 +2,7 @@
 12th - Computer project
                                                                 Big Ben
 
-                                                       Collobrators 
+                                                       Collabrators 
 
 
             S.No                    Name                 Class                Section                Exam No
