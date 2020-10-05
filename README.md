@@ -2,7 +2,7 @@
 12th - Computer project
                                                                 Big Ben
 
-                                                       Time Table 
+                                                       Collobrators 
 
 
             S.No                    Name                 Class                Section                Exam No
