@@ -5,10 +5,10 @@
                                                                Time Table 
 
 
-                  S.No                    Name                Class                Section                Exam No
-                   1.                  Naveen Raj T             12                     D                   12425
-                   2.                  Nickilesh L              12                     D                   12426
-                   3.                     Nigan                 12                     D                   12427
+               S.No                    Name                Class                Section                Exam No
+                 1.                  Naveen Raj T             12                     D                   12425
+                 2.                  Nickilesh L              12                     D                   12426
+                 3.                     Nigan                 12                     D                   12427
 
        
 Background  
