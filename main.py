@@ -39,7 +39,12 @@ for i in data:
         sql.execute("use big_ben;")
         break
 # Recieving Input From Admin
-
+print("\033[2J")
+print("")
+print("")
+print("                                        Big Ben")
+print("")
+print("")
 standard = int(input("STANDARAD : "))
 
 # To Find The Existence Of Tables 
@@ -63,9 +68,9 @@ for i in data:
         
 if Find:
     print("")
-    noOfSubject = int(input("No . Of . Subject :"))
+    noOfSubject = int(input("No . Of . Subject : "))
     print("")
-    noOfSection = int(input("No . Of. Section :"))
+    noOfSection = int(input("No . Of. Section : "))
 
     # Assining Name Of Section
 
@@ -82,7 +87,7 @@ if Find:
     print("Please Enter The Name Of Subjects")
     for i in range(noOfSubject):
         print('')
-        subject = input(f"Name Of Subject {i + 1} :")
+        subject = input(f"Name Of Subject {i + 1} : ")
         listOfSubject.append(subject)
 
     # Recieving No Of Periods per Week for Each Subject From Admin
@@ -93,7 +98,7 @@ if Find:
     print("Please Enter The No of Periods Per Week According To Thier Subject")
 
     for i in listOfSubject:
-        noOfPeriod = int(input(f"{i}"))
+        noOfPeriod = int(input(f"{i} : "))
         list_Of_No_Of_Periods.append(noOfPeriod) 
 
     #  Recieving Class Info
@@ -102,7 +107,7 @@ if Find:
 
     for i in listOfSubject :
         print("\033[2J")
-        print (f"Please Enter The  Name Of  {i} Teacher According To Thier Section ")
+        print (f"Please Enter The  Name Of ' {i} ' Teacher According To Thier Section ")
 
         # Appending Name Of Subject And NoOf Periods 
 
@@ -113,7 +118,7 @@ if Find:
         # Recieving Name Of the Teacher
 
         for i in listOfSecetion:
-            nameOfTeacher = input(f"{i} :")
+            nameOfTeacher = input(f"{i} : ")
             nameOfTeachers.append(nameOfTeacher)
 
         classInfo.append(nameOfTeachers)
