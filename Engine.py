@@ -131,7 +131,7 @@ def Sheduler(standard,conn,Reshedule):
                             
                             # Condition For Checking Both Students And Teacher Are Free At That Period
                             
-                            if wholeClassPeriod[section][day][period] == 0 and teacher[day][period] == 0 :
+                            if wholeClassPeriod[section][day][period] == "-" and teacher[day][period] == "-" :
                                 wholeClassPeriod[section][day][period] = ClassInfo[sub][0]
                                 teacher[day][period] = str(standard) + chr(section + 65)
                                 count += 1 

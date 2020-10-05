@@ -23,7 +23,7 @@ else:
 if os.path.exists("Class"):
     pass
 else:
-    os.mkdir("Teachers")
+    os.mkdir("Class")
 
 
 # Creation Of DataBase 
@@ -192,10 +192,10 @@ if Find:
         #Creating new Id for New Teacher and File
 
         newIdList = []
-        for i in range(1,(len(teachers)+1)):
+        for i in range((len(teachers))):
             Id = lastId + i
             newIdList.append(Id)
-            with open(f"{str(Id)}_{teachers[i]}.csv","w") as teacherFile:
+            with open(f"Teachers//{str(Id)}_{teachers[i]}.csv","w") as teacherFile:
                 teacherFileWriter = csv.writer(teacherFile)
                 Value = [["Days","Period-1","Period-2","Period-3","Period-4","Period-5","Period-6","Period-7","Period-8",],
                     ["MON","-","-","-","-","-","-","-","-"],
