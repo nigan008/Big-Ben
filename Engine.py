@@ -19,7 +19,7 @@ def Sheduler(standard,conn,Reshedule):
     sql.execute(f"select * from class_{standard}")
     ClassInfo = sql.fetchall()
 
-    noOfSection = len(ClassInfo[0][0]) - 2
+    noOfSection = len(ClassInfo[0]) - 2
 
     # Creating pre Shedule for Whole Class
 
@@ -132,7 +132,7 @@ def Sheduler(standard,conn,Reshedule):
                             # Condition For Checking Both Students And Teacher Are Free At That Period
                             
                             if wholeClassPeriod[section][day][period] == "-" and teacher[day][period] == "-" :
-                                wholeClassPeriod[section][day][period] = ClassInfo[sub][0]
+                                wholeClassPeriod[section][day][period] = ClassInfo[sub][0][0:3].upper()
                                 teacher[day][period] = str(standard) + chr(section + 65)
                                 count += 1 
                                 break

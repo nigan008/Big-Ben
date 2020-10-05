@@ -58,7 +58,7 @@ for i in data:
     if i[0] == "class_" + str(standard):
         print(f"The Time Table for class_{standard} was Already Created ")
         Find = False
-        descision = input("Do You Want to Reshedule It! ? y/n")
+        descision = input("Do You Want to Reshedule It! ? Yes / No  : ")
         descision = descision.lower()
         if descision == "yes" :
             Reshedule = True
@@ -95,7 +95,7 @@ if Find:
     list_Of_No_Of_Periods = []
 
     print("\033[2J")
-    print("Please Enter The No of Periods Per Week According To Thier Subject")
+    print("Please Enter The No of Periods Per Week For The Following Subject ")
 
     for i in listOfSubject:
         noOfPeriod = int(input(f"{i} : "))
@@ -107,7 +107,7 @@ if Find:
 
     for i in listOfSubject :
         print("\033[2J")
-        print (f"Please Enter The  Name Of ' {i} ' Teacher According To Thier Section ")
+        print (f"Please Enter The  Name Of ' {i} ' Teacher For The Following Section ")
 
         # Appending Name Of Subject And NoOf Periods 
 
