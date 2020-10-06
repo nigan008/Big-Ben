@@ -16,14 +16,19 @@ from Engine import Sheduler
 import csv
 # Importing OS Module Creating Folder For Storing Files File
 import os
-if os.path.exists("Teachers"):
+
+if os.path.exists("D://Big-Ben"):
     pass
 else:
-    os.mkdir("Teachers")
-if os.path.exists("Class"):
+    os.mkdir("D://Big-Ben")
+if os.path.exists("D://Big-Ben//Teachers"):
     pass
 else:
-    os.mkdir("Class")
+    os.mkdir("D://Big-Ben//Teachers")
+if os.path.exists("D://Big-Ben//Class"):
+    pass
+else:
+    os.mkdir("D://Big-Ben//Class")
 
 
 # Creation Of DataBase 
@@ -234,7 +239,7 @@ if Find:
         for i in range(len(teachers)):
             Id = 1000 + i
             IdList.append(Id)
-            with open(f"Teachers//{str(Id)}_{teachers[i]}.csv","w") as teacherFile:
+            with open(f"D://Big-Ben//Teachers//{str(Id)}_{teachers[i]}.csv","w") as teacherFile:
                 teacherFileWriter = csv.writer(teacherFile)
                 Value = [["Days","Period-1","Period-2","Period-3","Period-4","Period-5","Period-6","Period-7","Period-8",],
                     ["MON","-","-","-","-","-","-","-","-"],
