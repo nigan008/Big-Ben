@@ -82,39 +82,13 @@ def Sheduler(standard,conn,Reshedule):
                 # Program For The Subject More Than 5 Periods per Week
 
                 if ClassInfo[sub][1] > 5 :
-                    for p in range(2):
-                        Day = [1,2,3,4,5]
-                        len(str(p))
-
-                        # Obtaining Random Day
-
-                        for l in range(len(Day)):
-                            day = random.choice(Day)
-                            Day.remove(day)
-                            Period = [1,2,3,4,5,6,7,8]
-                            len(str(l))
-
-                            # Obtaining Random Period
-
-                            for k in range(len(Period)):
-                                period = random.choice(Period)
-                                Period.remove(period)
-                                len(str(k))
-
-                                # Condition For Checking Both Students And Teacher Are Free At That Period
-
-                                if wholeClassPeriod[section][day][period] == "-" and teacher[day][period] == "-" :
-                                    wholeClassPeriod[section][day][period] = ClassInfo[sub][0][0:3].upper()
-                                    teacher[day][period] = str(standard) + chr(section + 65)
-                                    count += 1 
-                                    break
-                            if count == ClassInfo[sub][1] :
-                                break
-                
-                # Program For The Subject Less Than 5 Periods
-
+                    times = 2
                 else:
+                    times = 1
+                for p in range(times):
+                    
                     Day = [1,2,3,4,5]
+                    len(str(p))
 
                     # Obtaining Random Day
 
@@ -122,15 +96,17 @@ def Sheduler(standard,conn,Reshedule):
                         day = random.choice(Day)
                         Day.remove(day)
                         Period = [1,2,3,4,5,6,7,8]
+                        len(str(l))
 
                         # Obtaining Random Period
 
                         for k in range(len(Period)):
                             period = random.choice(Period)
                             Period.remove(period)
-                            
+                            len(str(k))
+
                             # Condition For Checking Both Students And Teacher Are Free At That Period
-                            
+
                             if wholeClassPeriod[section][day][period] == "-" and teacher[day][period] == "-" :
                                 wholeClassPeriod[section][day][period] = ClassInfo[sub][0][0:3].upper()
                                 teacher[day][period] = str(standard) + chr(section + 65)
@@ -138,11 +114,15 @@ def Sheduler(standard,conn,Reshedule):
                                 break
                         if count == ClassInfo[sub][1] :
                             break
+                            
+        # Storing Data into Teacher's File
 
         with open(f"Teachers//{str(TeacherInfo[Name][0])}_{TeacherInfo[Name][1]}.csv","w") as teacherFile:
             teacherFileWriter = csv.writer(teacherFile)
             for I in teacher:
                     teacherFileWriter.writerow(I)
+              
+    # Storing Data Into Class Files
         
     for Section in wholeClassPeriod:
         with open(f"Class//{standard}_{chr(wholeClassPeriod.index(Section) + 65)}.csv","w") as studentFile:
