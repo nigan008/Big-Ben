@@ -1,7 +1,7 @@
 #  Importing PYMYSQL And Establishing Connecction With MYSQL
 
 import pymysql
-conn=pymysql.connect(host="localhost",user="root",password="")
+conn=pymysql.connect(host="localhost",user="root",password="",port = 3308)
 sql=conn.cursor()
 
 #  Importing Colorama Package
@@ -52,6 +52,18 @@ print("")
 print("")
 standard = int(input("STANDARAD : "))
 
+Sector = input("SECTOR : ")
+
+if os.path.exists(f"D://Big-Ben//Teachers//{Sector}"):
+    pass
+else:
+    os.mkdir(f"D://Big-Ben//Teachers//{Sector}")
+
+if os.path.exists(f"D://Big-Ben//Class{Sector}"):
+    pass
+else:
+    os.mkdir(f"D://Big-Ben//Class//{Sector}")
+
 # To Find The Existence Of Tables 
 
 Reshedule = False
@@ -67,7 +79,7 @@ for i in data:
         descision = descision.lower()
         if descision == "yes" :
             Reshedule = True
-            Sheduler(standard,conn,Reshedule) 
+            Sheduler(standard,conn,Reshedule,Sector) 
         else :
             print("Hi")
         
@@ -200,7 +212,7 @@ if Find:
         for i in range((len(teachers))):
             Id = lastId + i
             newIdList.append(Id)
-            with open(f"Teachers//{str(Id)}_{teachers[i]}.csv","w") as teacherFile:
+            with open(f"D://Big-Ben//Teachers//{Sector}//{str(Id)}_{teachers[i]}.csv","w") as teacherFile:
                 teacherFileWriter = csv.writer(teacherFile)
                 Value = [["Days","Period-1","Period-2","Period-3","Period-4","Period-5","Period-6","Period-7","Period-8",],
                     ["MON","-","-","-","-","-","-","-","-"],
@@ -239,7 +251,7 @@ if Find:
         for i in range(len(teachers)):
             Id = 1000 + i
             IdList.append(Id)
-            with open(f"D://Big-Ben//Teachers//{str(Id)}_{teachers[i]}.csv","w") as teacherFile:
+            with open(f"D://Big-Ben//Teachers//{Sector}//{str(Id)}_{teachers[i]}.csv","w") as teacherFile:
                 teacherFileWriter = csv.writer(teacherFile)
                 Value = [["Days","Period-1","Period-2","Period-3","Period-4","Period-5","Period-6","Period-7","Period-8",],
                     ["MON","-","-","-","-","-","-","-","-"],
@@ -269,6 +281,6 @@ if Find:
 
 # Allocation Of Periods 
 
-    Sheduler(standard,conn,Reshedule)
+    Sheduler(standard,conn,Reshedule,Sector)
 
 

@@ -10,7 +10,7 @@ import os
 
 # A Function To Shedule The Periods For Teachers And Students
 
-def Sheduler(standard,conn,Reshedule):
+def Sheduler(standard,conn,Reshedule,Sector):
     # Importing PYMYSQL And Establishing Connecction With MYSQL
 
     import pymysql
@@ -50,7 +50,7 @@ def Sheduler(standard,conn,Reshedule):
     
         teacher = []
         line = 0
-        with open(f"D://Big-Ben//Teachers//{str(TeacherInfo[Name][0])}_{TeacherInfo[Name][1]}.csv","r") as teacherFile:
+        with open(f"D://Big-Ben//Teachers//{Sector}//{str(TeacherInfo[Name][0])}_{TeacherInfo[Name][1]}.csv","r") as teacherFile:
             teacherFileReader = csv.reader(teacherFile)
             for g in teacherFileReader:
                 if line%2 == 0:
@@ -119,19 +119,19 @@ def Sheduler(standard,conn,Reshedule):
                             
         # Storing Data into Teacher's File
 
-        with open(f"D://Big-Ben//Teachers//{str(TeacherInfo[Name][0])}_{TeacherInfo[Name][1]}.csv","w") as teacherFile:
+        with open(f"D://Big-Ben//Teachers//{Sector}//{str(TeacherInfo[Name][0])}_{TeacherInfo[Name][1]}.csv","w") as teacherFile:
             teacherFileWriter = csv.writer(teacherFile)
             for I in teacher:
                     teacherFileWriter.writerow(I)
               
     # Storing Data Into Class Files
-    if os.path.exists(f"D://Big-Ben//Class//{standard}"):
+    if os.path.exists(f"D://Big-Ben//Class//{Sector}//{standard}"):
         pass
     else:
-        os.mkdir(f"D://Big-Ben//Class//{standard}")
+        os.mkdir(f"D://Big-Ben//Class//{Sector}//{standard}")
         
     for Section in wholeClassPeriod:
-        with open(f"D://Big-Ben//Class//{standard}//{standard}_{chr(wholeClassPeriod.index(Section) + 65)}.csv","w") as studentFile:
+        with open(f"D://Big-Ben//Class//{Sector}//{standard}//{standard}_{chr(wholeClassPeriod.index(Section) + 65)}.csv","w") as studentFile:
             studentFileWriter = csv.writer(studentFile)
             for ClassPeriod in Section:
                 studentFileWriter.writerow(ClassPeriod)
