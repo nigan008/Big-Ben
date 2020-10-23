@@ -11,6 +11,7 @@ import os
 # A Function To Shedule The Periods For Teachers And Students
 
 def Sheduler(standard,conn,Reshedule,Sector):
+
     # Importing PYMYSQL And Establishing Connecction With MYSQL
 
     import pymysql
@@ -20,19 +21,20 @@ def Sheduler(standard,conn,Reshedule,Sector):
 
     sql.execute(f"select * from class_{standard}")
     ClassInfo = sql.fetchall()
-
     noOfSection = len(ClassInfo[0]) - 2
 
     # Creating pre Shedule for Whole Class
 
     wholeClassPeriod = []
     for i in range(noOfSection) :
+
         classPeriod = [["Days","Period-1","Period-2","Period-3","Period-4","Period-5","Period-6","Period-7","Period-8",],
                         ["MON","-","-","-","-","-","-","-","-"],
                         ["TUE","ASS","-","-","-","-","-","-","-"],
                         ["WED","-","-","-","-","-","-","-","-"],
                         ["THUR","ASS","-","-","-","-","-","-","-"],
                         ["FRI","-","-","-","-","-","-","-","-"]]   
+                        
         wholeClassPeriod.append(classPeriod)
 
     # Recieving TeacherInfo from Database
@@ -50,12 +52,15 @@ def Sheduler(standard,conn,Reshedule,Sector):
     
         teacher = []
         line = 0
+
         with open(f"D://Big-Ben//Teachers//{Sector}//{str(TeacherInfo[Name][0])}_{TeacherInfo[Name][1]}.csv","r") as teacherFile:
             teacherFileReader = csv.reader(teacherFile)
+
             for g in teacherFileReader:
                 if line%2 == 0:
                     teacher.append(g)
                 line+=1
+
             teacherFile.close() 
 
         if Reshedule :
@@ -114,6 +119,7 @@ def Sheduler(standard,conn,Reshedule,Sector):
                                 teacher[day][period] = str(standard) + chr(section + 65)
                                 count += 1 
                                 break
+
                         if count == ClassInfo[sub][1] :
                             break
                             
@@ -122,19 +128,25 @@ def Sheduler(standard,conn,Reshedule,Sector):
         with open(f"D://Big-Ben//Teachers//{Sector}//{str(TeacherInfo[Name][0])}_{TeacherInfo[Name][1]}.csv","w") as teacherFile:
             teacherFileWriter = csv.writer(teacherFile)
             for I in teacher:
-                    teacherFileWriter.writerow(I)
+                teacherFileWriter.writerow(I)
+            teacherFile.close()
               
     # Storing Data Into Class Files
+
     if os.path.exists(f"D://Big-Ben//Class//{Sector}//{standard}"):
         pass
+
     else:
         os.mkdir(f"D://Big-Ben//Class//{Sector}//{standard}")
         
     for Section in wholeClassPeriod:
+
         with open(f"D://Big-Ben//Class//{Sector}//{standard}//{standard}_{chr(wholeClassPeriod.index(Section) + 65)}.csv","w") as studentFile:
             studentFileWriter = csv.writer(studentFile)
             for ClassPeriod in Section:
                 studentFileWriter.writerow(ClassPeriod)
+
+        studentFile.close()
     
 
 
