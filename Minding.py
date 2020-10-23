@@ -95,7 +95,7 @@ def Minding():
         
         holder = []
 
-    #  For The Absented Teacher's Periods
+    # Getting Information Of The Absented Teacher's Periods
 
         for period in range(1,9):
 
