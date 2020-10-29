@@ -1,11 +1,11 @@
 #  Importing Colorama Package
- 
+
 from colorama import init
 init()
 
-# Importing Main File
+# Importing Execute (.py File)
 
-from Main import Main
+from Execute import Main
 
 # Importing Minding File
 
@@ -41,10 +41,10 @@ while loop:
     if Service == 1:
         Main()
 
-    if Service == 2:
+    elif Service == 2:
         Minding()
 
-    if Service == 3:
+    elif Service == 3:
         Id_View()
 
     else :
@@ -53,7 +53,7 @@ while loop:
 
     controller = input("Do You Want To Continue  [ Yes / No ] : ").lower()
     print("")
-    
+
     if controller == "yes":
         loop = True
 

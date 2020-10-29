@@ -5,13 +5,11 @@ conn=pymysql.connect(host="localhost",user="root",password="",port = 3308)
 sql=conn.cursor()
 
 #  Importing Colorama Package
- 
+
 from colorama import init
 init()
 
-# Importing Shedule(.py File) and Sheduler(Function)
-
-from Shedule import Sheduler
+# Importing CSV Package
 
 import csv
 
@@ -19,9 +17,18 @@ import csv
 
 import os
 
-# Checking Whether The Folder Are Created If Not Folder will Be Created
+# Importing Shedule(.py File) and Sheduler(Function)
+
+from Shedule import Sheduler
+
+# Importing Big_Ben_Higher (.py File) and (Higher , Higher_Sheduler) -> used for class 11 and 12
+
+from Big_Ben_Higher import Higher , Higher_Sheduler
+
 
 def Main():
+
+    # Checking Whether Folder exists els Create The Folder
 
     if os.path.exists("D://Big-Ben"):
         pass
@@ -29,13 +36,11 @@ def Main():
     else:
         os.mkdir("D://Big-Ben")
 
-
     if os.path.exists("D://Big-Ben//Teachers"):
         pass
 
     else:
         os.mkdir("D://Big-Ben//Teachers")
-
 
     if os.path.exists("D://Big-Ben//Class"):
 
@@ -43,7 +48,6 @@ def Main():
 
     else:
         os.mkdir("D://Big-Ben//Class")
-
 
     # Creation Of DataBase 
 
@@ -84,38 +88,55 @@ def Main():
     else:
         os.mkdir(f"D://Big-Ben//Teachers//{Sector}")
 
-    if os.path.exists(f"D://Big-Ben//Class{Sector}"):
+    if os.path.exists(f"D://Big-Ben//Class//{Sector}"):
         pass
 
     else:
         os.mkdir(f"D://Big-Ben//Class//{Sector}")
 
-    # To Find The Existence Of Tables 
+    # To Find Whether The Class is Already Sheduled 
 
     Reshedule = False
     Find = True
+
+    sql.execute("use big_ben")
     sql.execute("show tables")
     data = sql.fetchall()
 
     for i in data:
 
-        if i[0] == "class_" + str(standard):
+        if i[0] == "teacher_" + str(standard):
             print(f"The Time Table for class_{standard} was Already Created ")
+            print("")
+
             Find = False
             descision = input("Do You Want to Reshedule It! ? Yes / No  : ")
+            print("")
+
             descision = descision.lower()
 
             if descision == "yes" :
                 Reshedule = True
-                Sheduler(standard,conn,Reshedule,Sector) 
+
+                if standard == 12 or standard == 11:
+                    Higher_Sheduler(Reshedule,Sector,standard)
+
+                else:
+                    Sheduler(standard,conn,Reshedule,Sector) 
 
             else :
                 print("Thank You For Using Big Ben")
+
+
+
+    lower = True
+
+    if standard == 11 or standard == 12 :
+        lower = False
+        Higher(Find,standard,Sector,Reshedule)
             
-    if Find:
-
+    if Find and lower:
         noOfSubject = int(input("No . Of . Subject : "))
-
         print("")
 
         noOfSection = int(input("No . Of. Section : "))
@@ -125,7 +146,6 @@ def Main():
         listOfSecetion = []
 
         for i in range(noOfSection):
-
             alphabet = "Section_" + chr( i + 65)
             listOfSecetion.append(alphabet)
 
@@ -176,7 +196,7 @@ def Main():
             print("")
             print (f"Please Enter The  Name Of ' {i} ' Teacher For The Following Section ")
 
-            # Appending Name Of Subject And NoOf Periods 
+            # Appending Name Of Subject And No Of Periods 
 
             nameOfTeachers = []
             nameOfTeachers.append(i)
@@ -213,7 +233,7 @@ def Main():
 
         for m in range(noOfSubject):
             data = sql.fetchone()
-            max(m)
+            len(str(m))
 
             for b in range(2,noOfSection+2):
                 teachers.append(data[b])
@@ -228,8 +248,6 @@ def Main():
 
                 for p in k:
                     teachers.pop(p)
-        for s in teachers :
-            print(s)
 
         #  Table Verification 
 
@@ -242,7 +260,7 @@ def Main():
             if i[0][0 : 7] == "teacher":
                 sortedTables.append(i[0])
             
-        #          Teacher's ID Creation
+        #  Teacher's ID Creation
 
         if not sortedTables == []:
             oldTeacher=[]
@@ -303,8 +321,6 @@ def Main():
                 temp.append(teachers[i])
                 teacher_info.append(temp)
 
-            print(teacher_info)
-
             #Creation Of Tables 
 
             sql.execute(f"create table teacher_{standard} (ID int(10) , Name char(50))")
@@ -330,9 +346,9 @@ def Main():
 
                     Value = [["Days","Period-1","Period-2","Period-3","Period-4","Period-5","Period-6","Period-7","Period-8",],
                         ["MON","-","-","-","-","-","-","-","-"],
-                        ["TUE","ASS","-","-","-","-","-","-","-"],
+                        ["TUE","-","-","-","-","-","-","-","-"],
                         ["WED","-","-","-","-","-","-","-","-"],
-                        ["THUR","ASS","-","-","-","-","-","-","-"],
+                        ["THUR","-","-","-","-","-","-","-","-"],
                         ["FRI","-","-","-","-","-","-","-","-"]]
 
                     for i in Value:
@@ -347,9 +363,7 @@ def Main():
                 temp.append(teachers[i])
                 teacher_info.append(temp)
 
-            print(teacher_info)
-
-        #   Creation Of Tables
+        #  Creation Of Tables
 
             sql.execute(f"create table teacher_{standard} (ID int(10) , Name char(50))")
 
